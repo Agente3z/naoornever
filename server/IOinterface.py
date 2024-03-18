@@ -11,7 +11,7 @@ naoPort = 50015
 serverSocket = None
 bufSize = 1024*16
 sttModel = None
-webPack = {"products":[], "subtitle":"string"}
+webPack = {"products":[], "subtitle":None}
 
 mode = "" # "test" and/or "nao" and/or stt and/or web
 
