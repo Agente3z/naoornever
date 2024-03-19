@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from database import Inventory, Order, init_db, db
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -7,6 +8,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+CORS(app)
 
 db.init_app(app)
 
@@ -30,7 +32,7 @@ def get():
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
-@app.post("/add")
+@app.post('/add')
 def add():
     nome = request.form.get('nome')
     macrocategoria = request.form.get('macrocategoria')
