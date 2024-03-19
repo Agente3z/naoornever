@@ -23,7 +23,7 @@ Altro aspetto di rilievo per il progetto è stato quello di garantire un'ottima 
 ### AI
 
 All'interno della directory [server](https://github.com/AssortedMine70/naoornever/tree/main/server)  è contenuto il programma in python che funge da interfaccia tra il NAO e il modello di ai hostato in locale attraverso [llamafile](https://github.com/Mozilla-Ocho/llamafile) che aiuta il cliente a trovare il prodotto che cerca.
-La connessione al NAO è effettuata dalla libreria [IOinterface.py]([https://github.com/AssortedMine70/naoornever/server/IOinterface.py) atrraverso un socket, il server riceve un file audio che il nao registra (che contiene la richiesta del cliente) e converte il file in testo attraverso [openai whisper](https://github.com/openai/whisper), poi impacchetta la richiesta in un contesto dedicato alal richiesta fatta e questa rinterazione si ripete finchè il cliente non decide di comprare un prodotto.
+La connessione al NAO è effettuata dalla libreria [IOinterface.py]([https://github.com/AssortedMine70/naoornever/server/IOinterface.py) atrraverso un socket, il server riceve un file audio che il nao registra (che contiene la richiesta del cliente) e converte il file in testo attraverso [openai whisper](https://github.com/openai/whisper), poi impacchetta la richiesta in un contesto dedicato alla richiesta fatta e questa rinterazione si ripete finchè il cliente non decide di comprare un prodotto.
 
 #### Librerie Python
 - websockets
