@@ -20,9 +20,12 @@ class prodRecord :
 
 allrecords = []
 
-aiCatalogString = ""
+lampCatalogString = ""
+sofaCatalogString = ""
+tableCatalogString = ""
+chairCatalogString = ""
 
-with open("db.csv") as csvfile:
+with open("database.csv") as csvfile:
     for row in csvfile:
         s = row.split(";")
 
@@ -36,4 +39,11 @@ with open("db.csv") as csvfile:
 
         allrecords.append(copy.deepcopy(r))
 
-        aiCatalogString += s[0]+";"+s[1]+";"+s[2]+";"+s[11]+";\n"
+        if s[18] == "illuminazione":
+            lampCatalogString += s[0]+";"+s[1]+";"+s[2]+";"+s[11]+";\n"
+        elif s[18] == "poltrone" or s[18] == "pouf":
+            sofaCatalogString += s[0]+";"+s[1]+";"+s[2]+";"+s[11]+";\n"
+        elif s[18] == "tavoli" or s[18] == "tavolini":
+            sofaCatalogString += s[0]+";"+s[1]+";"+s[2]+";"+s[11]+";\n"
+        elif s[18] == "sedute":
+            chairCatalogString += s[0]+";"+s[1]+";"+s[2]+";"+s[11]+";\n"
