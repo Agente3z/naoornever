@@ -25,6 +25,14 @@ Altro aspetto di rilievo per il progetto è stato quello di garantire un'ottima 
 All'interno della directory [server](https://github.com/AssortedMine70/naoornever/tree/main/server)  è contenuto il programma in python che funge da interfaccia tra il NAO e il modello di ai hostato in locale attraverso [llamafile](https://github.com/Mozilla-Ocho/llamafile) che aiuta il cliente a trovare il prodotto che cerca.
 La connessione al NAO è effettuata dalla libreria [IOinterface.py]([https://github.com/AssortedMine70/naoornever/server/IOinterface.py) atrraverso un socket, il server riceve un file audio che il nao registra (che contiene la richiesta del cliente) e converte il file in testo attraverso [openai whisper](https://github.com/openai/whisper), poi impacchetta la richiesta in un contesto dedicato alal richiesta fatta e questa rinterazione si ripete finchè il cliente non decide di comprare un prodotto.
 
+#### Librerie Python
+- websockets
+- whisper
+- openai
+
+#### Modello ai
+- [Cerbero 7b versione 4k](https://huggingface.co/galatolo/cerbero-7b)
+
 ### Monitor
 
 Il monitor consiste in una pagina web che si connette al server con un websocket, iil server invia i prodotti che il montor deve mostrare e ciò che il NAO sta dicendo al cliente in modo da fornire contemporaneamente informazioni sui pordotti e sottotitoli per garantitre accessibilità anche per chi ha problemi di udito. 
