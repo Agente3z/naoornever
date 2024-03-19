@@ -77,6 +77,12 @@ def main():
 
                 if "Lamps".lower() in intrest.lower():
                     chat = ai.lampContext
+                elif "Sofas".lower() in intrest.lower():
+                    chat = ai.sofaContext
+                elif "Tables".lower() in intrest.lower():
+                    chat = ai.tablesContext
+                elif "Chairs".lower() in intrest.lower():
+                    chat = ai.chairContext
                 elif "Unrelated".lower() in intrest.lower():
                     bought = True
                     io.sendOutput(makePkgString("Mi dispiace ma non sono in grado di gestire queste richieste", reset=True))
