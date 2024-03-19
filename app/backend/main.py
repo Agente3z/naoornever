@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import cross_origin
 from database import Inventory, Order, init_db, db
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -8,7 +8,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-CORS(app)
 
 db.init_app(app)
 
@@ -33,6 +32,7 @@ def get():
         return response
 
 @app.post('/add')
+@cross_origin()
 def add():
     nome = request.form.get('nome')
     macrocategoria = request.form.get('macrocategoria')
@@ -58,7 +58,6 @@ def add():
     db.session.add(item)
     db.session.commit()
     response = jsonify("Item added")
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 @app.get("/remove")
@@ -104,6 +103,7 @@ def control_get():
     return response
 
 @app.post("/control")
+@cross_origin()
 def control_post():
     id = request.form.get('id')
     conferma = request.form.get('conferma')
@@ -116,13 +116,9 @@ def control_post():
             db.session.delete(item)
         db.session.commit()
         response = jsonify("Done")
-        response.status_code = 200
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
     else:
         response = jsonify("Missing parameters")
-        response.status_code = 200
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 app.run(debug=False)
