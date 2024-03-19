@@ -20,11 +20,15 @@ def get():
     if nome:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
         result = {"nome": item.nome, "macrocategoria": item.macrocategoria, "categoria": item.categoria, "sottocategoria": item.sottocategoria, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "colore": item.colore, "disegno": item.disegno, "foto": item.foto, "link": item.link, "features": item.features, "descrizione_intorto": item.descrizione_intorto, "descrizione_tecnica": item.descrizione_tecnica, "variante1": item.variante1, "variante2": item.variante2, "variante3": item.variante3}
-        return jsonify(result)
+        response = jsonify(result)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     else:
         inventory = Inventory.query.all()
         result = [{"nome": i.nome, "macrocategoria": i.macrocategoria, "categoria": i.categoria, "sottocategoria": i.sottocategoria, "materiali": i.materiali, "peso": i.peso, "prezzo": i.prezzo, "dimensioni": i.dimensioni, "colore": i.colore, "disegno": i.disegno, "foto": i.foto, "link": i.link, "features": i.features, "descrizione_intorto": i.descrizione_intorto, "descrizione_tecnica": i.descrizione_tecnica, "variante1": i.variante1, "variante2": i.variante2, "variante3": i.variante3} for i in inventory]
-        return jsonify(result)
+        response = jsonify(result)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 @app.post("/add")
 def add():
@@ -51,7 +55,9 @@ def add():
     item = Inventory(nome=nome, macrocategoria=macrocategoria, categoria=categoria, sottocategoria=sottocategoria, materiali=materiali, peso=peso, prezzo=prezzo, dimensioni=dimensioni, colore=colore, disegno=disegno, foto=foto, link=link, features=features, descrizione_intorto=descrizione_intorto, descrizione_tecnica=descrizione_tecnica, variante1=variante1, variante2=variante2, variante3=variante3)
     db.session.add(item)
     db.session.commit()
-    return jsonify("Item added")
+    response = jsonify("Item added")
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.get("/remove")
 def remove():
@@ -60,9 +66,13 @@ def remove():
         item = Inventory.query.filter_by(nome=nome).first_or_404()
         db.session.delete(item)
         db.session.commit()
-        return jsonify("Item removed")
+        response = jsonify("Item removed")
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     else:
-        return jsonify("Missing parameters")
+        response = jsonify("Missing parameters")
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 @app.get("/sell")
 def sell():
@@ -72,15 +82,24 @@ def sell():
         order = Order(nome=nome)
         db.session.add(order)
         db.session.commit()
-        return jsonify("Item awaiting confirmation")
+        response = jsonify("Item awaiting confirmation")
+        response.status_code = 200
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     else:
-        return jsonify("Missing parameters")
+        response = jsonify("Missing parameters")
+        response.status_code = 200
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 @app.get("/control")
 def control_get():
     orders = Order.query.all()
     result = [{"id": i.id, "nome": i.nome, "timestamp": i.timestamp, "conferma": i.conferma} for i in orders]
-    return jsonify(result)
+    response = jsonify(result)
+    response.status_code = 200
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.post("/control")
 def control_post():
@@ -94,8 +113,14 @@ def control_post():
         if conferma:
             db.session.delete(item)
         db.session.commit()
-        return jsonify("Done")
+        response = jsonify("Done")
+        response.status_code = 200
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     else:
-        return jsonify("Missing parameters")
+        response = jsonify("Missing parameters")
+        response.status_code = 200
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 app.run(debug=False)
