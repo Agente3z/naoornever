@@ -35,6 +35,6 @@ La connessione al NAO è effettuata dalla libreria [IOinterface.py]([https://git
 
 ### Monitor
 
-Il monitor consiste in una pagina web che si connette al server con un websocket, iil server invia i prodotti che il montor deve mostrare e ciò che il NAO sta dicendo al cliente in modo da fornire contemporaneamente informazioni sui pordotti e sottotitoli per garantitre accessibilità anche per chi ha problemi di udito. 
+Il monitor consiste in una pagina web che si connette al server con un websocket, il server invia i prodotti che il montor deve mostrare e ciò che il NAO sta dicendo al cliente in modo da fornire contemporaneamente informazioni sui pordotti e sottotitoli per garantitre accessibilità anche per chi ha problemi di udito. 
 
 ### App
