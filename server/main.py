@@ -28,7 +28,7 @@ def parse(string):
             print("found")
         print("test "+ prod.name.lower())
 
-    print(io.webPack["products"][0])
+    #print(io.webPack["products"][0])
     
     return string, move, reset
 

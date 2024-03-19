@@ -4,6 +4,7 @@ import asyncio
 import json
 import time
 from threading import *
+import copy
 #import whisper as wh
 
 naoAddress = "172.16.7.250"
@@ -51,12 +52,18 @@ async def webSockManager():
 async def sendArr(websocket):
     global webPack
     while True:
-        sendArr = []
-        for obj in webPack["products"]:
-            sendArr.append(obj.to_dict())
-        time.sleep(1)
-        webPack["products"] = sendArr
-        await websocket.send(json.dumps(webPack))
+        #print(webPack["products"])
+
+        sendPack = {"subtitle":webPack["subtitle"], "products":[]}
+
+        for i in webPack["products"]:
+            #print(i)
+            sendPack["products"].append(i.to_dict())
+
+        #print(json.dumps(sendPack))
+
+        await websocket.send(json.dumps(sendPack))
+        time.sleep(0.5)
         await asyncio.sleep(0)
 
 def close():

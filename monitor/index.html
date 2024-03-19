@@ -3,19 +3,37 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>NAO or Never - WebPortal</title>
+	<title>NAO or Never - Monitor</title>
+	<link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
 	<link rel="stylesheet" href="style.css">
 	<script src="main.js"></script>
 </head>
 <body>
+	<div class="header">
+		<a href="https://www.naoornever.it">
+			<img src="./assets/logo.png" alt="logo">
+		</a>
+		<input id="accessibility-checkbox" type="checkbox">
+		<label for="accessibility-checkbox">
+			<svg class="accessibility-on" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+				<path fill="#ffff" d="M480-720q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720ZM360-80v-520q-60-5-122-15t-118-25l20-80q78 21 166 30.5t174 9.5q86 0 174-9.5T820-720l20 80q-56 15-118 25t-122 15v520h-80v-240h-80v240h-80Z"/>
+			</svg>
+			<svg class="accessibility-off" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+				<path fill="#ffff" d="M480-720q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720ZM360-80v-520H120v-80h720v80H600v520h-80v-240h-80v240h-80Z"/>
+			</svg>
+		</label>
+		<div class="subtitles">
+			<span data-text=""></span>
+		</div>
+	</div>
 	<div class="cards-container">
 		<div template class="card" data-text>
 			<img src="#">
 			<div class="description">
-				<h1 class="title" data-text="Lampada"></h1><br>
-				<span class="dimensioni" data-text="0">Dimensioni:</span><br>
-				<span class="peso" data-text="0">Peso:</span><br>
-				<span class="prezzo" data-text="0">Prezzo:</span><br>
+				<h1 class="title" data-text="Lampada"></h1>
+				<span class="dimensioni" data-text="0"></span>
+				<span class="peso" data-text="0"></span>
+				<span class="prezzo" data-text="0"></span>
 			</div>
 		</div>
 	</div>
