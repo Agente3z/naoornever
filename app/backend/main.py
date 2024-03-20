@@ -33,7 +33,22 @@ def get():
 @app.get("/headers")
 @cross_origin()
 def headers():
-    headers = ["categoria", "sottocategoria", "nome", "materiali", "peso", "prezzo", "dimensioni", "foto", "link"]
+    categorie = Inventory.query.with_entities(Inventory.categoria).distinct().all()
+    categorie = [i[0] for i in categorie]
+    categorie.sort()
+    sottocategorie = Inventory.query.with_entities(Inventory.sottocategoria).distinct().all()
+    sottocategorie = [i[0] for i in sottocategorie]
+    sottocategorie.sort()
+    headers = [{"name": "categoria", "type": "select", "selectOptions": categorie},
+                {"name": "sottocategoria", "type": "select", "selectOptions": sottocategorie},
+                {"name": "nome", "type": "text"},
+                {"name": "materiali", "type": "text"},
+                {"name": "peso", "type": "number"},
+                {"name": "prezzo", "type": "number"},
+                {"name": "dimensioni", "type": "text"},
+                {"name": "foto", "type": "text"},
+                {"name": "link", "type": "text"}
+               ]
     response = jsonify(headers)
     return response
 
