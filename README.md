@@ -72,7 +72,7 @@ Il server (hostato sulla porta 5000) implementa diverse pagine con metodi divers
 
 /sell (GET): dato un nome come argomento lo aggiunge agli ordini in attesa
 
-/control (GET): elenca tutti gli ordini in attesa di conferma
+/control (GET): argomenti: all (True o False), elenca tutti gli ordini in attesa di conferma, se all è True restituisce anche quelli già confermati o rifiutati
 
 /control (POST): argomenti: id e conferma (True or False), se conferma è True conferma l'ordine e rimuove l'item dall'inventario, se è False annulla l'ordine, mantenendolo però nel log degli ordini.
 
