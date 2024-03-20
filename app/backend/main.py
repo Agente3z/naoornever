@@ -124,7 +124,7 @@ def remove():
         response = jsonify("Missing parameters")
         return response
 
-@app.get("/sell")
+@app.patch("/sell")
 @cross_origin()
 def sell():
     nome = request.args.get('nome')
