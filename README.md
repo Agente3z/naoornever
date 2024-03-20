@@ -84,6 +84,7 @@ Il server (hostato sulla porta 5000) implementa diverse pagine con metodi divers
 
 /headers (GET): restituisce tutti i parametri della table Inventario
 
+Quando un item viene venduto o rimosso tramite API, prima abbassa di uno la quantità, se vede che arriva a 0 lo rimuove dal database.
 Nel caso il sito mostri un errore 404, vuol dire che l'id dell'ordine o il nome del prodotto non sono stati trovati.
 
 #### Frontend
