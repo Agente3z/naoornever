@@ -132,11 +132,9 @@ def sell():
         db.session.add(order)
         db.session.commit()
         response = jsonify("Item awaiting confirmation")
-        response.status_code = 200
         return response
     else:
         response = jsonify("Missing parameters")
-        response.status_code = 200
         return response
 
 @app.get("/control")
@@ -148,9 +146,16 @@ def control_get():
         orders = Order.query.all()
     else:
         orders = Order.query.filter_by(conferma=None).all()
-    result = [{"id": i.id, "nome": i.nome, "timestamp": i.timestamp, "conferma": i.conferma} for i in orders]
+    result = []
+    for i in orders:
+        print(i, i.nome)
+        item = Inventory.query.filter_by(nome=i.nome).first()
+        try:
+            foto = item.foto
+        except:
+            foto = ""
+        result.append({"id": i.id, "nome": i.nome, "conferma": i.conferma, "timestamp": i.timestamp, "foto": foto})
     response = jsonify(result)
-    response.status_code = 200
     return response
 
 @app.post("/control")
