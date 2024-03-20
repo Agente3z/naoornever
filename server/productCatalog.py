@@ -1,5 +1,11 @@
+#!/usr/bin/env python3
+
+# Product database importing script
+
+# Imports
 import copy
 
+# Product class
 class prodRecord :
     name="",
     weight="",
@@ -8,6 +14,7 @@ class prodRecord :
     photo="",
     link=""
 
+    # Dict conversion for json packaging
     def to_dict(self):
         return {
             "name": self.name,
@@ -18,17 +25,21 @@ class prodRecord :
             "link": self.link
         }
 
+# Product list
 allrecords = []
 
+# Strings for context creation
 lampCatalogString = ""
 sofaCatalogString = ""
 tableCatalogString = ""
 chairCatalogString = ""
 
+# DB File parsing 
 with open("database.csv") as csvfile:
     for row in csvfile:
         s = row.split(";")
 
+        # Record creation
         r = prodRecord()
         r.name = s[1]
         r.weight = s[3]
@@ -36,14 +47,14 @@ with open("database.csv") as csvfile:
         r.dim = s[5]
         r.photo = s[8]
         r.link = s[9]
-
         allrecords.append(copy.deepcopy(r))
 
-        if s[18] == "illuminazione":
-            lampCatalogString += s[0]+";"+s[1]+";"+s[2]+";"+s[11]+";\n"
-        elif s[18] == "poltrone" or s[18] == "pouf":
-            sofaCatalogString += s[0]+";"+s[1]+";"+s[2]+";"+s[11]+";\n"
-        elif s[18] == "tavoli" or s[18] == "tavolini":
-            sofaCatalogString += s[0]+";"+s[1]+";"+s[2]+";"+s[11]+";\n"
-        elif s[18] == "sedute":
-            chairCatalogString += s[0]+";"+s[1]+";"+s[2]+";"+s[11]+";\n"
+        # Context strings
+        if "illuminazione" in s[18].lower():
+            lampCatalogString += s[0]+"/"+s[1]+"/"+s[2]+"/"+"\n"
+        elif "comode" in s[18].lower() or "poltrone" in s[18] or "pouf" in s[18]:
+            sofaCatalogString += s[0]+"/"+s[1]+"/"+s[2]+"/"+"\n"
+        elif "tavoli" in s[18].lower() or "tavolini" in s[18]:
+            tableCatalogString += s[0]+"/"+s[1]+"/"+s[2]+"/"+"\n"
+        elif "sedute" in s[18].lower():
+            chairCatalogString += s[0]+"/"+s[1]+"/"+s[2]+"/"+"\n"

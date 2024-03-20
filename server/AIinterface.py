@@ -1,56 +1,83 @@
-from openai import OpenAI
+#!/usr/bin/env python3
+
+# AI library
+
+# Imports
 import productCatalog
+from openai import OpenAI
 
-isTest = False
+# AI globals
+testMode = False
 
-identifyPromt = """
-You are meant to identify the context of the Italian-language question you receive, the possible contexts are:
-- Lamps
-- Sofas
-- Tables
-- Chairs
-Respond with "Context: [ctx]", do not put in [ctx] more than 1 word; if the context is unrelated say only "Context: Unrelated" and stop.
+# Fake message class
+class fakeAIMessage:
+    content = ""
+    def __init__(self, content):
+        self.content = content
+
+# Identification prompt
+identifyPrompt = """
+Devi trovare l'argomento della domanda che ti viene posta tra quelli che trovi qui sotto (fornisci l'argomento pià vicino)
+- Lampade
+- Poltrone
+- Tavoli
+- Sedie
+Rispondi con "Contesto: [ctx]", se non ha rientra in nessun argomento rispondi "Contesto: Altro" e fermati.
 """
 
-genralPromt = """
-Sei NAO, un commesso alla SICIS, un venditore di prodotti di design.
-Aiuta il cliente a trovare il prodotto che cerca, suggerendo tra quelli che ti sono forniti.
-
-Questi sono i prodotti, descritti con i seguenti campi separati da ";": tipologia;nome;materiali;descrizione;
-
-# inizio file
+# General sell prompt
+genralPrompt = """
+Sei NAO, un commesso alla SICIS, un venditore di prodotti di design, aiuta il cliente a trovare il prodotto che cerca, suggerendo tra quelli che ti sono forniti, non dimenticare mai i prodotti che sono descritti con i seguenti campi separati da "/": tipologia/nome/materiali/
+# inizio prodotti
 {value}
-# fine file
-
-Chiama i prodotti con il loro nome indicato nel file e scrivi il loro nome ogni volta che ne parli.
+# fine prodotti
+Chiama sempre i prodotti con il loro nome completo e riscrivi il loro nome ogli volta che ne parli, se il cliente vuole terminare la conversazione dì "stop" e fermati, se invece vuole acquistare un prodotto specifico dì "Grazie per l'acquisto di [prodotto]" e fermati.
+"""
+"""
+Chiama i prodotti con il loro nome completo indicato nel file e scrivi il loro nome ogni volta che ne parli.
+Se il cliente chiede di terminare la conversazione dì "stop" e fermati.
 Sei il cliente decide di comprare un prodotto specifico dì "Grazie per l'acquisto di [prodotto]" e fermati.
-Parla con un tono semplice e conciso.
+Parla in modo semplice e conciso.
+Le prossime cose che ti vengono dette sono dette dal cliente.
 """
 
-lampPromt = genralPromt.format(value = productCatalog.lampCatalogString)
-sofaPromt = genralPromt.format(value = productCatalog.sofaCatalogString)
-tablePromt = genralPromt.format(value = productCatalog.tableCatalogString)
-chairPromt = genralPromt.format(value = productCatalog.chairCatalogString)
+# Specific prompt creation
+lampPrompt = genralPrompt.format(value = productCatalog.lampCatalogString)
+sofaPrompt = genralPrompt.format(value = productCatalog.sofaCatalogString)
+tablePrompt = genralPrompt.format(value = productCatalog.tableCatalogString)
+chairPrompt = genralPrompt.format(value = productCatalog.chairCatalogString)
 
-lampContext = [{"role": "system", "content": lampPromt}]
-sofaContext = [{"role": "system", "content": sofaPromt}]
-tableContext = [{"role": "system", "content": tablePromt}]
-chairPromtContext = [{"role": "system", "content": chairPromt}]
+# Context creation
+lampContext = [{"role": "Sistema","content": lampPrompt}]
+sofaContext = [{"role": "Sistema","content": sofaPrompt}]
+tableContext = [{"role": "Sistema","content": tablePrompt}]
+chairContext = [{"role": "Sistema","content": chairPrompt}]
 
-identifyContext = [{"role": "system", "content": identifyPromt}]
+identifyContext = [{"role": "Sistema","content": identifyPrompt}]
 
+# Response request function
 def getResponse(chat, temperature=0.7, frequency_penalty=0, presence_penalty=0):
-    client = OpenAI(base_url="http://localhost:8080/v1", api_key="sk-no-key-required")
-    response = client.chat.completions.create(
-        model="LLaMA_CPP",
-        messages = chat,
-        temperature = temperature,
-        frequency_penalty = frequency_penalty, # Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
-        presence_penalty = presence_penalty # Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
-        )
-    msg = response.choices[0].message
-    if "<|im_start|>" in msg.content:
-        msg.content = msg.content.split("<|im_start|>")[0]
-    if "<|im_end" in msg.content:
-        msg.content = msg.content.split("<|im_end")[0]
-    return msg
+    global isTest
+
+    if testMode:
+        return fakeAIMessage(" "+input("AI> "))
+    else:
+        # Connection to llamafile and copletion request
+        client = OpenAI(base_url="http://localhost:8080/v1", api_key="sk-no-key-required")
+        response = client.chat.completions.create(
+            model="LLaMA_CPP",
+            messages = chat,
+            temperature = temperature,
+            frequency_penalty = frequency_penalty, # Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
+            presence_penalty = presence_penalty # Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
+            )
+        
+        # Only 1st choice is selected
+        msg = response.choices[0].message
+        if "<|im_start|>" in msg.content:
+            msg.content = msg.content.split("<|im_start|>")[0]
+        if "<|im_end" in msg.content:
+            msg.content = msg.content.split("<|im_end")[0]
+        if "[|" in msg.content:
+            msg.content = msg.content.split("[|")[0]
+        return msg
