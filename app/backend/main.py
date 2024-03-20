@@ -82,13 +82,14 @@ def add():
     response = jsonify("Item added")
     return response
 
-@app.post("/addOne")
+@app.post("/addExisting")
 @cross_origin()
 def addOne():
     nome = request.form.get('nome')
-    if nome:
+    quantita = request.form.get('quantità')
+    if nome and quantita:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
-        item.quantita += 1
+        item.quantita += int(quantita)
         db.session.commit()
         response = jsonify("Item added")
         return response
