@@ -59,9 +59,9 @@ Il monitor consiste in una pagina web che si connette al server con un websocket
 ### App
 
 #### Backend
-Per la gestione del database degli ordini e dell'inventario viene utilizzato flask che implementa una rest api, e sqlalchemy, che permette di interagire con database sql indipendentemente dall'engine, che in questo caso è sqlite.
-Vengono create due tabelle che permettono di popolare il database sql: Ordini e Inventario.
-Al primo avvio c'è anche la possibilità di importare un database in formato csv dentro all'sql.
+Per la gestione del database degli ordini e dell'inventario viene utilizzato Flask che implementa una Rest API, e SQLAlchemy, che permette di interagire con un database SQL indipendentemente dall'engine, che in questo caso è SQLite.
+Vengono create due tabelle che permettono di popolare il database SQL: Ordini e Inventario.
+Al primo avvio c'è anche la possibilità di importare un database in formato csv dentro all'SQL.
 Il server (hostato sulla porta 5000) implementa diverse pagine con metodi diversi:
 
 /get (GET): senza argomenti da tutti gli elementi, con arg ?nome=nome da solo un elemento
