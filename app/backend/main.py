@@ -165,8 +165,8 @@ def control_post():
                 response = jsonify("Item already sold out")
             else:
                 item.quantita -= 1
+                response = jsonify("Done")
         db.session.commit()
-        response = jsonify("Done")
         return response
     else:
         response = jsonify("Missing parameters")
