@@ -4,6 +4,8 @@
 
 # Imports
 import copy
+import json
+import requests
 
 # Product class
 class prodRecord :
@@ -13,6 +15,14 @@ class prodRecord :
     dim="",
     photo="",
     link=""
+
+    def __init__(self, name, weight, cost, dim, photo, link) -> None:
+        self.name=name
+        self.weight=weight
+        self.cost=cost
+        self.dim=dim
+        self.photo=photo
+        self.link=link
 
     # Dict conversion for json packaging
     def to_dict(self):
@@ -33,7 +43,29 @@ lampCatalogString = ""
 sofaCatalogString = ""
 tableCatalogString = ""
 chairCatalogString = ""
+fornitureCatalogString = ""
 
+# Database retrival from API
+with requests.get("http://127.0.0.1:5000/get") as response:
+    for c in json.loads(response.content):
+
+        if "illuminazione" in c["categoria"].lower():
+            lampCatalogString += c["sottocategoria"] +"/"+ c["nome"] +"/"+ c["materiali"] +"/\n"
+        elif "sedute comode" in c["categoria"].lower():
+            sofaCatalogString += c["sottocategoria"] +"/"+ c["nome"] +"/"+ c["materiali"] +"/\n"
+        elif "tavoli & tavolini" in c["categoria"].lower():
+            tableCatalogString += c["sottocategoria"] +"/"+ c["nome"] +"/"+ c["materiali"] +"/\n"
+        elif "sedute" in c["categoria"].lower():
+            chairCatalogString += c["sottocategoria"] +"/"+ c["nome"] +"/"+ c["materiali"] +"/\n"
+        elif "mobilio" in c["categoria"].lower():
+            fornitureCatalogString += c["sottocategoria"] +"/"+ c["nome"] +"/"+ c["materiali"] +"/\n"
+        else:
+            continue
+
+        r = prodRecord(c["nome"], c["peso"], c["prezzo"], c["dimensioni"], c["foto"], c["link"])
+        allrecords.append(r)
+
+"""
 # DB File parsing 
 with open("database.csv") as csvfile:
     for row in csvfile:
@@ -58,3 +90,4 @@ with open("database.csv") as csvfile:
             tableCatalogString += s[0]+"/"+s[1]+"/"+s[2]+"/"+"\n"
         elif "sedute" in s[18].lower():
             chairCatalogString += s[0]+"/"+s[1]+"/"+s[2]+"/"+"\n"
+"""

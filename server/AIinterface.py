@@ -22,6 +22,8 @@ Devi trovare l'argomento della domanda che ti viene posta tra quelli che trovi q
 - Poltrone
 - Tavoli
 - Sedie
+- Mobilio
+- Specchi
 Rispondi con "Contesto: [ctx]", se non ha rientra in nessun argomento rispondi "Contesto: Altro" e fermati.
 """
 
@@ -29,8 +31,7 @@ Rispondi con "Contesto: [ctx]", se non ha rientra in nessun argomento rispondi "
 genralPrompt = """
 Sei NAO, un commesso alla SICIS, un venditore di prodotti di design, aiuta il cliente a trovare il prodotto che cerca, suggerendo tra quelli che ti sono forniti, non dimenticare mai i prodotti che sono descritti con i seguenti campi separati da "/": tipologia/nome/materiali/
 # inizio prodotti
-{value}
-# fine prodotti
+{value}# fine prodotti
 Chiama sempre i prodotti con il loro nome completo e riscrivi il loro nome ogli volta che ne parli, se il cliente vuole terminare la conversazione dì "stop" e fermati, se invece vuole acquistare un prodotto specifico dì "Grazie per l'acquisto di [prodotto]" e fermati.
 """
 """
@@ -46,12 +47,14 @@ lampPrompt = genralPrompt.format(value = productCatalog.lampCatalogString)
 sofaPrompt = genralPrompt.format(value = productCatalog.sofaCatalogString)
 tablePrompt = genralPrompt.format(value = productCatalog.tableCatalogString)
 chairPrompt = genralPrompt.format(value = productCatalog.chairCatalogString)
+forniturePrompt = genralPrompt.format(value = productCatalog.fornitureCatalogString)
 
 # Context creation
 lampContext = [{"role": "Sistema","content": lampPrompt}]
 sofaContext = [{"role": "Sistema","content": sofaPrompt}]
 tableContext = [{"role": "Sistema","content": tablePrompt}]
 chairContext = [{"role": "Sistema","content": chairPrompt}]
+fornitureContext = [{"role": "Sistema","content": forniturePrompt}]
 
 identifyContext = [{"role": "Sistema","content": identifyPrompt}]
 

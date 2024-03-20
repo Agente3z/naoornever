@@ -5,6 +5,7 @@
 # Imports
 import json
 import copy as cp
+import requests
 import AIinterface as ai
 import IOinterface as io
 import productCatalog as pc
@@ -31,8 +32,7 @@ def parse(string):
         reset = True
         move = 1
 
-        # bought products in io.webpack["products"]
-        # implement request to server
+        requests.get("http://127.0.0.1:5000/sell", params={"nome":io.webPack["products"][0].name})
 
 
     return string, move, reset
@@ -50,12 +50,12 @@ def main():
     debug("Main function started")
 
     # IO modes and init
-    io.mode = "debug" + "manual" + "web" #+ "nao" + "stt" #"nao" + "stt"#"stt" + "nao" # +"manual" + "web"
+    io.mode = "debug"+"manual"
     io.naoPort = 50015
     io.initialize()
 
     # AI mode
-    ai.testMode = False
+    ai.testMode = True
 
     # Main loop check variable
     stop = False
