@@ -20,16 +20,20 @@ def parse(string):
     reset = False
     io.webPack = {"products":[], "subtitle":string}
 
-    # Customer purchase check
-    if "acquisto" in string.lower() or "stop" in string.lower():
-        reset = True
-        move = 1
-    
     # Product parsing for monitor
     for prod in pc.allrecords:
         if prod.name.lower() in string.lower():
             io.webPack["products"].append(prod)
             debug("found "+prod.name.lower())
+
+    # Customer purchase check
+    if "acquisto" in string.lower() or "stop" in string.lower():
+        reset = True
+        move = 1
+
+        # bought products in io.webpack["products"]
+        # implement request to server
+
 
     return string, move, reset
 
