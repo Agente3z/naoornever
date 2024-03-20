@@ -114,7 +114,9 @@ def remove():
     nome = request.args.get('nome')
     if nome:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
-        db.session.delete(item)
+        item.quantita -= 1
+        if item.quantita == 0:
+            db.session.delete(item)
         db.session.commit()
         response = jsonify("Item removed")
         return response
