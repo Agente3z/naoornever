@@ -128,7 +128,12 @@ def sell():
 @app.get("/control")
 @cross_origin()
 def control_get():
-    orders = Order.query.all()
+    all = request.args.get('all')
+    all = True if all == "True" else False
+    if all:
+        orders = Order.query.all()
+    else:
+        orders = Order.query.filter_by(conferma=None).all()
     result = [{"id": i.id, "nome": i.nome, "timestamp": i.timestamp, "conferma": i.conferma} for i in orders]
     response = jsonify(result)
     response.status_code = 200
