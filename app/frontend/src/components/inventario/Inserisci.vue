@@ -8,9 +8,11 @@ fetch('http://127.0.0.1:5000/headers')
 .then(json => headers.value = json);
 
 function submitForm(e) {
-	console.log((new FormData(e.target)).set);
 	fetch('http://127.0.0.1:5000/add', {
 		method: 'POST',
+		headers: {
+    		'Content-Type': 'application/x-www-form-urlencoded'
+  		},
 		body: new FormData(e.target)
 	}).then(res => res.json())
 	.then(json => alert(json));
@@ -23,10 +25,17 @@ function submitForm(e) {
 			<div class="input-wrapper">
 				<label v-for="header in headers">
 				{{ header.name }}
+					
+<!-- 
+				<select v-else name="categoria">
+							   <option v-for="option in header.selectOptions" :value="option">{{ option }}</option>
+						   </select>
+						   <select v-else name="sottocategoria">
+							   <option v-for="option in header.selectOptions" :value="option">{{ option }}</option>
+						   </select>
+			-->			
+	
 				<input v-if="header.type != 'select'" :type="header.type" :name="header.name">
-				<select v-else :name="header.name">
-					<option v-for="option in header.selectOptions" :value="option">{{ option }}</option>
-				</select>
 			</label>
 		</div>
 		<button type="submit"></button>

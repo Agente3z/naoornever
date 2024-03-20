@@ -3,13 +3,14 @@
 const props = defineProps(['product']);
 
 function confirm(e) {
+	console.log(e);
 	const formData = new FormData(e.target, e.submitter);
 	fetch('http://127.0.0.1:5000/control', {
 		method: 'POST',
 		headers: {
     		'Content-Type': 'application/x-www-form-urlencoded'
   		},
-		body: formData
+		body: `id=${formData.get('id')}&conferma=${formData.get('conferma')}`
 	})
 	.then(res => res.json())
 	.then(json => alert(json))

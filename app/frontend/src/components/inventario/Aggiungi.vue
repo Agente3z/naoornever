@@ -13,12 +13,12 @@ fetch('http://127.0.0.1:5000/get')
 
 function submitForm(e) {
 	selectedProducts.value.forEach(product => {
-		const formData = new FormData();
-		formData.set('id', product.nome);
-		formData.set('quantità', e.target.quantità);
 		fetch('http://127.0.0.1:5000/addExisting', {
 			method: 'POST',
-			body: new FormData(e.target)
+		headers: {
+    		'Content-Type': 'application/x-www-form-urlencoded'
+  		},
+			body: `nome=${product.nome}&quantità=${e.target.quantità.value}`
 		}).then(res => res.json())
 		.then(json => alert(json));
 	});

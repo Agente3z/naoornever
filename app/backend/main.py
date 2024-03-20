@@ -85,9 +85,10 @@ def add():
 
 @app.post("/addExisting")
 @cross_origin()
-def addOne():
+def addExisting():
     nome = request.form.get('nome')
     quantita = request.form.get('quantità')
+    print(nome, quantita)
     if nome and quantita:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
         item.quantita += int(quantita)
