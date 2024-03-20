@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_cors import cross_origin
 from database import Inventory, Order, init_db, db
+from sqlalchemy import desc
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -133,12 +134,11 @@ def control_get():
     all = request.args.get('all')
     all = True if all == "True" else False
     if all:
-        orders = Order.query.filter(Order.conferma.isnot(None)).all()
+        orders = Order.query.filter(Order.conferma.isnot(None)).order_by(desc(Order.id)).all()
     else:
-        orders = Order.query.filter_by(conferma=None).all()
+        orders = Order.query.filter_by(conferma=None).order_by(desc(Order.id)).all()
     result = []
     for i in orders:
-        print(i, i.nome)
         item = Inventory.query.filter_by(nome=i.nome).first()
         try:
             foto = item.foto
