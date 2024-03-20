@@ -25,7 +25,7 @@ def get():
         response = jsonify(result)
         return response
     else:
-        inventory = Inventory.query.all()
+        inventory = Inventory.query.order_by(Inventory.categoria, Inventory.sottocategoria, Inventory.nome).all()
         result = [{"categoria": item.categoria, "sottocategoria": item.sottocategoria, "nome": item.nome, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "foto": item.foto, "link": item.link} for item in inventory]
         response = jsonify(result)
         return response
@@ -42,6 +42,7 @@ def headers():
 def getCategorie():
     categorie = Inventory.query.with_entities(Inventory.categoria).distinct().all()
     result = [i[0] for i in categorie]
+    result.sort()
     response = jsonify(result)
     return response
 
@@ -50,6 +51,7 @@ def getCategorie():
 def getSottocategorie():
     sottocategorie = Inventory.query.with_entities(Inventory.sottocategoria).distinct().all()
     result = [i[0] for i in sottocategorie]
+    result.sort()
     response = jsonify(result)
     return response
 
