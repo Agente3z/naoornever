@@ -19,24 +19,15 @@ class Order(db.Model):
         return f"Order('{self.nome}', '{self.timestamp}', '{self.conferma}')"
 
 class Inventory(db.Model):
-    nome = db.Column(db.String(100), unique=True, nullable=False, primary_key=True)
-    macrocategoria = db.Column(db.String(100), nullable=False)
     categoria = db.Column(db.String(100), nullable=False)
     sottocategoria = db.Column(db.String(100), nullable=False)
+    nome = db.Column(db.String(100), unique=True, nullable=False, primary_key=True)
     materiali = db.Column(db.String(100), nullable=False)
-    peso = db.Column(db.Float, nullable=False)
-    prezzo = db.Column(db.Float, nullable=False)
+    peso = db.Column(db.Integer, nullable=False)
+    prezzo = db.Column(db.Integer, nullable=False)
     dimensioni = db.Column(db.String(100), nullable=False)
-    colore = db.Column(db.String(100), nullable=False)
-    disegno = db.Column(db.String(100), nullable=False)
     foto = db.Column(db.String(100), nullable=False)
-    link = db.Column(db.String(100), nullable=False)
-    features = db.Column(db.String(100), nullable=False)
-    descrizione_intorto = db.Column(db.String(100), nullable=False)
-    descrizione_tecnica = db.Column(db.String(100), nullable=False)
-    variante1 = db.Column(db.String(100), nullable=False)
-    variante2 = db.Column(db.String(100), nullable=False)
-    variante3 = db.Column(db.String(100), nullable=False)
+    link = db.Column(db.String(100), nullable=False) 
 
     def __repr__(self):
         return f"Inventory('{self.nome}', '{self.macrocategoria}', '{self.categoria}')"

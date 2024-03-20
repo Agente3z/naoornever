@@ -16,51 +16,44 @@ with app.app_context():
     init_db(db)
 
 @app.get("/get")
+@cross_origin()
 def get():
     nome = request.args.get('nome')
     if nome:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
-        result = {"nome": item.nome, "macrocategoria": item.macrocategoria, "categoria": item.categoria, "sottocategoria": item.sottocategoria, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "colore": item.colore, "disegno": item.disegno, "foto": item.foto, "link": item.link, "features": item.features, "descrizione_intorto": item.descrizione_intorto, "descrizione_tecnica": item.descrizione_tecnica, "variante1": item.variante1, "variante2": item.variante2, "variante3": item.variante3}
+        result = {"categoria": item.categoria, "sottocategoria": item.sottocategoria, "nome": item.nome, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "foto": item.foto, "link": item.link}
         response = jsonify(result)
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
     else:
         inventory = Inventory.query.all()
-        result = [{"nome": i.nome, "macrocategoria": i.macrocategoria, "categoria": i.categoria, "sottocategoria": i.sottocategoria, "materiali": i.materiali, "peso": i.peso, "prezzo": i.prezzo, "dimensioni": i.dimensioni, "colore": i.colore, "disegno": i.disegno, "foto": i.foto, "link": i.link, "features": i.features, "descrizione_intorto": i.descrizione_intorto, "descrizione_tecnica": i.descrizione_tecnica, "variante1": i.variante1, "variante2": i.variante2, "variante3": i.variante3} for i in inventory]
+        result = [{"categoria": item.categoria, "sottocategoria": item.sottocategoria, "nome": item.nome, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "foto": item.foto, "link": item.link} for i in inventory]
         response = jsonify(result)
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 @app.post('/add')
 @cross_origin()
 def add():
-    nome = request.form.get('nome')
-    macrocategoria = request.form.get('macrocategoria')
+    for i in ["categoria", "sottocategoria", "nome", "materiali", "peso", "prezzo", "dimensioni", "foto", "link"]:
+        if i not in request.form:
+            response = jsonify(f"Missing parameter {i}")
+            return response
     categoria = request.form.get('categoria')
     sottocategoria = request.form.get('sottocategoria')
+    nome = request.form.get('nome')
     materiali = request.form.get('materiali')
     peso = request.form.get('peso')
     prezzo = request.form.get('prezzo')
     dimensioni = request.form.get('dimensioni')
-    colore = request.form.get('colore')
-    disegno = request.form.get('disegno')
     foto = request.form.get('foto')
     link = request.form.get('link')
-    features = request.form.get('features')
-    descrizione_intorto = request.form.get('descrizione_intorto')
-    descrizione_tecnica = request.form.get('descrizione_tecnica')
-    variante1 = request.form.get('variante1')
-    variante2 = request.form.get('variante2')
-    variante3 = request.form.get('variante3')
-    if not nome or not macrocategoria or not categoria or not sottocategoria or not materiali or not peso or not prezzo or not dimensioni or not colore or not disegno or not foto or not link or not features or not descrizione_intorto or not descrizione_tecnica or not variante1 or not variante2 or not variante3:
-        return jsonify("Missing parameters")
-    item = Inventory(nome=nome, macrocategoria=macrocategoria, categoria=categoria, sottocategoria=sottocategoria, materiali=materiali, peso=peso, prezzo=prezzo, dimensioni=dimensioni, colore=colore, disegno=disegno, foto=foto, link=link, features=features, descrizione_intorto=descrizione_intorto, descrizione_tecnica=descrizione_tecnica, variante1=variante1, variante2=variante2, variante3=variante3)
+    item = Inventory(categoria=categoria, sottocategoria=sottocategoria, nome=nome, materiali=materiali, peso=peso, prezzo=prezzo, dimensioni=dimensioni, foto=foto, link=link)
     db.session.add(item)
     db.session.commit()
     response = jsonify("Item added")
     return response
 
 @app.get("/remove")
+@cross_origin()
 def remove():
     nome = request.args.get('nome')
     if nome:
@@ -68,14 +61,13 @@ def remove():
         db.session.delete(item)
         db.session.commit()
         response = jsonify("Item removed")
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
     else:
         response = jsonify("Missing parameters")
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 @app.get("/sell")
+@cross_origin()
 def sell():
     nome = request.args.get('nome')
     if nome:
@@ -85,21 +77,19 @@ def sell():
         db.session.commit()
         response = jsonify("Item awaiting confirmation")
         response.status_code = 200
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
     else:
         response = jsonify("Missing parameters")
         response.status_code = 200
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 @app.get("/control")
+@cross_origin()
 def control_get():
     orders = Order.query.all()
     result = [{"id": i.id, "nome": i.nome, "timestamp": i.timestamp, "conferma": i.conferma} for i in orders]
     response = jsonify(result)
     response.status_code = 200
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 @app.post("/control")
