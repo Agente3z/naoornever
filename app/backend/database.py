@@ -22,6 +22,7 @@ class Inventory(db.Model):
     categoria = db.Column(db.String(100), nullable=False)
     sottocategoria = db.Column(db.String(100), nullable=False)
     nome = db.Column(db.String(100), unique=True, nullable=False, primary_key=True)
+    quantita = db.Column(db.Integer, nullable=False)
     materiali = db.Column(db.String(100), nullable=False)
     peso = db.Column(db.Integer, nullable=False)
     prezzo = db.Column(db.Integer, nullable=False)

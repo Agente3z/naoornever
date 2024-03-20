@@ -21,12 +21,12 @@ def get():
     nome = request.args.get('nome')
     if nome:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
-        result = {"categoria": item.categoria, "sottocategoria": item.sottocategoria, "nome": item.nome, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "foto": item.foto, "link": item.link}
+        result = {"categoria": item.categoria, "sottocategoria": item.sottocategoria, "nome": item.nome, "quantita": item.quantita, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "foto": item.foto, "link": item.link}
         response = jsonify(result)
         return response
     else:
         inventory = Inventory.query.order_by(Inventory.categoria, Inventory.sottocategoria, Inventory.nome).all()
-        result = [{"categoria": item.categoria, "sottocategoria": item.sottocategoria, "nome": item.nome, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "foto": item.foto, "link": item.link} for item in inventory]
+        result = [{"categoria": item.categoria, "sottocategoria": item.sottocategoria, "nome": item.nome, "quantita": item.quantita, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "foto": item.foto, "link": item.link} for item in inventory]
         response = jsonify(result)
         return response
 
@@ -42,6 +42,7 @@ def headers():
     headers = [{"name": "categoria", "type": "select", "selectOptions": categorie},
                 {"name": "sottocategoria", "type": "select", "selectOptions": sottocategorie},
                 {"name": "nome", "type": "text"},
+                {"name": "quantita", "type": "number"},
                 {"name": "materiali", "type": "text"},
                 {"name": "peso", "type": "number"},
                 {"name": "prezzo", "type": "number"},
@@ -73,20 +74,21 @@ def getSottocategorie():
 @app.post('/add')
 @cross_origin()
 def add():
-    for i in ["categoria", "sottocategoria", "nome", "materiali", "peso", "prezzo", "dimensioni", "foto", "link"]:
+    for i in ["categoria", "sottocategoria", "nome", "quantita", "materiali", "peso", "prezzo", "dimensioni", "foto", "link"]:
         if i not in request.form:
             response = jsonify(f"Missing parameter {i}")
             return response
     categoria = request.form.get('categoria')
     sottocategoria = request.form.get('sottocategoria')
     nome = request.form.get('nome')
+    quantita = request.form.get('quantita')
     materiali = request.form.get('materiali')
     peso = request.form.get('peso')
     prezzo = request.form.get('prezzo')
     dimensioni = request.form.get('dimensioni')
     foto = request.form.get('foto')
     link = request.form.get('link')
-    item = Inventory(categoria=categoria, sottocategoria=sottocategoria, nome=nome, materiali=materiali, peso=peso, prezzo=prezzo, dimensioni=dimensioni, foto=foto, link=link)
+    item = Inventory(categoria=categoria, sottocategoria=sottocategoria, nome=nome, quantita=quantita, materiali=materiali, peso=peso, prezzo=prezzo, dimensioni=dimensioni, foto=foto, link=link)
     db.session.add(item)
     db.session.commit()
     response = jsonify("Item added")
