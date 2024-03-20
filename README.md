@@ -68,11 +68,11 @@ Il server (hostato sulla porta 5000) implementa diverse pagine con metodi divers
 
 /add (POST): dati in post tutti gli argomenti aggiunge un elemento all'inventario (data: "arg1=test&arg2=test...")
 
-/addOne (GET): argomenti: nome, aumenta di uno la quantità di un item nell'inventario 
+/addOne (POST): argomenti: nome, aumenta di uno la quantità di un item nell'inventario 
 
 /remove (GET): dato un nome come argomento lo rimuove dall'inventario
 
-/sell (GET): dato un nome come argomento lo aggiunge agli ordini in attesa
+/sell (PATCH): dato un nome come argomento lo aggiunge agli ordini in attesa
 
 /control (GET): argomenti: all (True o False), elenca tutti gli ordini in attesa di conferma, se all è True restituisce anche quelli già confermati o rifiutati
 
