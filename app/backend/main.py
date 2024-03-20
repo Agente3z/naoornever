@@ -101,9 +101,10 @@ def remove():
     nome = request.args.get('nome')
     if nome:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
-        item.quantita -= 1
         if item.quantita == 0:
-            db.session.delete(item)
+            response = jsonify("Item already sold out")
+        else:
+            item.quantita -= 1
         db.session.commit()
         response = jsonify("Item removed")
         return response
@@ -160,9 +161,10 @@ def control_post():
         order.conferma = conferma
         item = Inventory.query.filter_by(nome=order.nome).first_or_404() # già venduto
         if conferma:
-            item.quantita -= 1
             if item.quantita == 0:
-                db.session.delete(item)
+                response = jsonify("Item already sold out")
+            else:
+                item.quantita -= 1
         db.session.commit()
         response = jsonify("Done")
         return response
