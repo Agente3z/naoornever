@@ -66,9 +66,7 @@ function switchView(viewTitle) {
 			border-top-left-radius: 5px;
 			border-top-right-radius: 5px;
 			border: 2px solid transparent;
-			// border-top: 2px solid transparent;
-			// border-right: 2px solid transparent;
-			// border-left: 2px solid transparent;
+			white-space: nowrap;
 
 
 			&:hover {
