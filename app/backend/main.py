@@ -145,7 +145,7 @@ def control_get():
     all = request.args.get('all')
     all = True if all == "True" else False
     if all:
-        orders = Order.query.all()
+        orders = Order.query.filter(Order.conferma.isnot(None)).all()
     else:
         orders = Order.query.filter_by(conferma=None).all()
     result = []
