@@ -49,7 +49,7 @@ La connessione al NAO è effettuata dalla libreria [IOinterface.py]([https://git
 - whisper
 - openai
 
-#### Modello ai
+#### Modello AI
 - [Cerbero 7b versione 4k](https://huggingface.co/galatolo/cerbero-7b-gguf/tree/main)
 
 ### Monitor
