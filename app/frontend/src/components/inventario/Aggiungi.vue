@@ -1,15 +1,19 @@
 <script setup>
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.css'
+
 import { ref } from 'vue';
 
-const headers = ref([]);
+const products = ref([]);
+const selectedProducts = ref([]);
 
-fetch('http://127.0.0.1:5000/headers')
+fetch('http://127.0.0.1:5000/get')
 .then(res => res.json())
-.then(json => headers.value = json);
+.then(json => products.value = json);
 
 function submitForm(e) {
 	console.log((new FormData(e.target)).set);
-	fetch('http://127.0.0.1:5000/add', {
+	fetch('http://127.0.0.1:5000/', {
 		method: 'POST',
 		body: new FormData(e.target)
 	}).then(res => res.json())
@@ -21,12 +25,27 @@ function submitForm(e) {
 	<form @submit.prevent="submitForm">
 		<h1 class="page-title"></h1>
 			<div class="input-wrapper">
-				<label v-for="header in headers">
-				{{ header.name }}
-				<input v-if="header.type != 'select'" :type="header.type" :name="header.name">
-				<select v-else :name="header.name">
-					<option v-for="option in header.selectOptions" :value="option">{{ option }}</option>
-				</select>
+			<label class="items-selector">
+				<Multiselect
+					class="selector"
+					v-model="selectedProducts"
+					:options="products"
+					:multiple="true"
+					:hide-selected="true"
+					:close-on-select="false"
+					placeholder="Seleziona"
+					select-label=""
+					label="nome"
+					track-by="nome"
+				>
+					<template #option="{ option }">
+						{{ option.nome }}
+					</template>
+					<template #noResult>Nessun risultato.</template>monitor/assets/logo.png
+				</Multiselect>
+			</label>
+			<label class="quantity-selector">
+				<input type="number" name="quantità" value="1" min="0" required>
 			</label>
 		</div>
 		<button type="submit"></button>
@@ -45,7 +64,7 @@ form {
 		margin-bottom: 1rem;
 
 		&::before {
-			content: 'Inserisci un nuovo prodotto';
+			content: 'Aggiungi prodotti all\'inventario';
 		}
 	}
 
@@ -53,8 +72,7 @@ form {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		overflow: auto;
-		
+
 		label {
 			display: flex;
 			flex-direction: column;
@@ -62,15 +80,31 @@ form {
 			font-size: 1.5rem;
 			text-transform: capitalize;
 
-			input, select {
+
+			&.items-selector::before {
+				content: 'Seleziona prodotti';
+			}
+
+			&.quantity-selector::before {
+				content: 'Inserisci la quantità';
+			}
+
+			input {
 				font-size: 1.2rem;
 				padding: .5rem;
 				border: none;
 				border-radius: 5px;
 			}
+			
+			.selector {
+				box-sizing: border-box;
+				max-width: 100%;
+				cursor: pointer;
+			}
 		}
 	}
 	button {
+		margin-top: auto;
 		padding: 1rem;
 		color: $primary-color-text;
 		background-color: $primary-color;
