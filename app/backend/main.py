@@ -26,9 +26,25 @@ def get():
         return response
     else:
         inventory = Inventory.query.all()
-        result = [{"categoria": item.categoria, "sottocategoria": item.sottocategoria, "nome": item.nome, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "foto": item.foto, "link": item.link} for i in inventory]
+        result = [{"categoria": item.categoria, "sottocategoria": item.sottocategoria, "nome": item.nome, "materiali": item.materiali, "peso": item.peso, "prezzo": item.prezzo, "dimensioni": item.dimensioni, "foto": item.foto, "link": item.link} for item in inventory]
         response = jsonify(result)
         return response
+
+@app.get("/getCategorie")
+@cross_origin()
+def getCategorie():
+    categorie = Inventory.query.with_entities(Inventory.categoria).distinct().all()
+    result = [i[0] for i in categorie]
+    response = jsonify(result)
+    return response
+
+@app.get("/getSottocategorie")
+@cross_origin()
+def getSottocategorie():
+    sottocategorie = Inventory.query.with_entities(Inventory.sottocategoria).distinct().all()
+    result = [i[0] for i in sottocategorie]
+    response = jsonify(result)
+    return response
 
 @app.post('/add')
 @cross_origin()
