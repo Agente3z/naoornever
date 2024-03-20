@@ -154,6 +154,7 @@ def control_get():
 @app.post("/control")
 @cross_origin()
 def control_post():
+    print(request.form)
     id = request.form.get('id')
     conferma = request.form.get('conferma')
     if id and conferma:
@@ -167,6 +168,8 @@ def control_post():
             else:
                 item.quantita -= 1
                 response = jsonify("Done")
+        else:
+            response = jsonify("Item not sold")
         db.session.commit()
         return response
     else:
