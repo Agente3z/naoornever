@@ -89,7 +89,8 @@ Il server riceve tramite un buffer il file audio registrato dal nao, lo passa a 
 La risposta viene mandata al nao che per ricevere riapre una connessione al socket. 
 Il nao sempre tramite buffer riceve un json contenente 4 istruzioni: content (ciò che deve dire), move (l'azione che deve fare), stop (che gli da il comando di fermarsi) e reset (che fa resettare il nao allo stato iniziale).
 Il nao esegue poi le azioni in modo tale da poter muoversi mentre parla tramite parallelismo. Apre una connessione proxy locale all'api contenente le funzioni in c++ e manda il messaggio alla funzione ALTextToSpeech, che gli permette di parlare. 
-```
+
+```py
  tts = ALProxy("ALTextToSpeech","localhost", 9559)
         tts.say(whatToSay)
 ```
