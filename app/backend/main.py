@@ -66,6 +66,9 @@ def add():
     sottocategoria = request.form.get('sottocategoria')
     nome = request.form.get('nome')
     quantita = request.form.get('quantità')
+    if quantita<=0:
+        response = jsonify("La quantità deve essere maggiore di 0")
+        return response
     materiali = request.form.get('materiali')
     peso = request.form.get('peso')
     prezzo = request.form.get('prezzo')
@@ -78,10 +81,10 @@ def add():
     response = jsonify("Item added")
     return response
 
-@app.get("/addOne")
+@app.post("/addOne")
 @cross_origin()
 def addOne():
-    nome = request.args.get('nome')
+    nome = request.form.get('nome')
     if nome:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
         item.quantita += 1
@@ -98,9 +101,10 @@ def remove():
     nome = request.args.get('nome')
     if nome:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
-        item.quantita -= 1
         if item.quantita == 0:
-            db.session.delete(item)
+            response = jsonify("Item already sold out")
+        else:
+            item.quantita -= 1
         db.session.commit()
         response = jsonify("Item removed")
         return response
@@ -157,9 +161,10 @@ def control_post():
         order.conferma = conferma
         item = Inventory.query.filter_by(nome=order.nome).first_or_404() # già venduto
         if conferma:
-            item.quantita -= 1
             if item.quantita == 0:
-                db.session.delete(item)
+                response = jsonify("Item already sold out")
+            else:
+                item.quantita -= 1
         db.session.commit()
         response = jsonify("Done")
         return response
