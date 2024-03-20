@@ -32,7 +32,7 @@ def parse(string):
         reset = True
         move = 1
 
-        requests.get("http://127.0.0.1:5000/sell", params={"nome":io.webPack["products"][0].name})
+        requests.patch("http://127.0.0.1:5000/sell", params={"nome":io.webPack["products"][0].name})
 
 
     return string, move, reset
