@@ -80,6 +80,8 @@ Il server (hostato sulla porta 5000) implementa diverse pagine con metodi divers
 
 /sottocategoria (GET): restituisce tutte le sottocategorie
 
+/headers (GET): restituisce tutti i parametri della table Inventario
+
 Nel caso il sito mostri un errore 404, vuol dire che l'id dell'ordine o il nome del prodotto non sono stati trovati.
 
 #### Frontend

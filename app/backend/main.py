@@ -30,6 +30,13 @@ def get():
         response = jsonify(result)
         return response
 
+@app.get("/headers")
+@cross_origin()
+def headers():
+    headers = ["categoria", "sottocategoria", "nome", "materiali", "peso", "prezzo", "dimensioni", "foto", "link"]
+    response = jsonify(headers)
+    return response
+
 @app.get("/getCategorie")
 @cross_origin()
 def getCategorie():
