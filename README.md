@@ -76,6 +76,10 @@ Il server (hostato sulla porta 5000) implementa diverse pagine con metodi divers
 
 /control (POST): argomenti: id e conferma (True or False), se conferma è True conferma l'ordine e rimuove l'item dall'inventario, se è False annulla l'ordine, mantenendolo però nel log degli ordini.
 
+/categoria (GET): restituisce tutte le categorie
+
+/sottocategoria (GET): restituisce tutte le sottocategorie
+
 Nel caso il sito mostri un errore 404, vuol dire che l'id dell'ordine o il nome del prodotto non sono stati trovati.
 
 #### Frontend
