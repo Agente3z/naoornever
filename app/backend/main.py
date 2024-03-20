@@ -66,6 +66,9 @@ def add():
     sottocategoria = request.form.get('sottocategoria')
     nome = request.form.get('nome')
     quantita = request.form.get('quantità')
+    if quantita<=0:
+        response = jsonify("La quantità deve essere maggiore di 0")
+        return response
     materiali = request.form.get('materiali')
     peso = request.form.get('peso')
     prezzo = request.form.get('prezzo')
