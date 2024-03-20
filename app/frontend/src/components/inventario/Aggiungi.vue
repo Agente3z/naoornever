@@ -12,12 +12,16 @@ fetch('http://127.0.0.1:5000/get')
 .then(json => products.value = json);
 
 function submitForm(e) {
-	console.log((new FormData(e.target)).set);
-	fetch('http://127.0.0.1:5000/', {
-		method: 'POST',
-		body: new FormData(e.target)
-	}).then(res => res.json())
-	.then(json => alert(json));
+	selectedProducts.value.forEach(product => {
+		const formData = new FormData();
+		formData.set('id', product.nome);
+		formData.set('quantità', e.target.quantità);
+		fetch('http://127.0.0.1:5000/addExisting', {
+			method: 'POST',
+			body: new FormData(e.target)
+		}).then(res => res.json())
+		.then(json => alert(json));
+	});
 }
 </script>
 

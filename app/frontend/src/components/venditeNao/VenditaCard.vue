@@ -12,19 +12,18 @@ function confirm(e) {
 		body: formData
 	})
 	.then(res => res.json())
-	.then(json => console.log(json))
+	.then(json => alert(json))
 }
 </script>
 
 <template>
-	{{ props.product }}
 	<div class="wrapper">
 		<img :src="product.foto" alt="foto prodotto">
 		<div class="infos">
 			<h1>{{ props.product.nome }}</h1>
 			<span>{{ 'Il ' + new Date(props.product.timestamp).toLocaleDateString() + ' alle ' + new Date(props.product.timestamp).toLocaleTimeString() }}</span>
 		</div>
-		{{ props.product.quantità }}
+		<span v-if="props.product.conferma == null">{{ props.product.quantità }}</span>
 		<form v-if="props.product.conferma == null" class="confirm" @submit.prevent="confirm">
 			<input type="hidden" name="id" :value="props.product.id">
 			<button class="confirm" name="conferma" value="True"></button>
