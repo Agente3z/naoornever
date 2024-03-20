@@ -94,6 +94,20 @@ def add():
     response = jsonify("Item added")
     return response
 
+@app.get("/addOne")
+@cross_origin()
+def addOne():
+    nome = request.args.get('nome')
+    if nome:
+        item = Inventory.query.filter_by(nome=nome).first_or_404()
+        item.quantita += 1
+        db.session.commit()
+        response = jsonify("Item added")
+        return response
+    else:
+        response = jsonify("Missing parameters")
+        return response
+
 @app.get("/remove")
 @cross_origin()
 def remove():
@@ -150,7 +164,9 @@ def control_post():
         order.conferma = conferma
         item = Inventory.query.filter_by(nome=order.nome).first_or_404() # già venduto
         if conferma:
-            db.session.delete(item)
+            item.quantita -= 1
+            if item.quantita == 0:
+                db.session.delete(item)
         db.session.commit()
         response = jsonify("Done")
         return response
