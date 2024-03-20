@@ -152,9 +152,11 @@ def control_get():
         item = Inventory.query.filter_by(nome=i.nome).first()
         try:
             foto = item.foto
+            quantita = item.quantita
         except:
             foto = ""
-        result.append({"id": i.id, "nome": i.nome, "conferma": i.conferma, "timestamp": i.timestamp, "foto": foto})
+            quantita = 0
+        result.append({"id": i.id, "nome": i.nome, "conferma": i.conferma, "timestamp": i.timestamp, "foto": foto, "quantita": quantita})
     response = jsonify(result)
     return response
 
