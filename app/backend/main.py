@@ -55,24 +55,6 @@ def headers():
     response = jsonify(headers)
     return response
 
-@app.get("/getCategorie")
-@cross_origin()
-def getCategorie():
-    categorie = Inventory.query.with_entities(Inventory.categoria).distinct().all()
-    result = [i[0] for i in categorie]
-    result.sort()
-    response = jsonify(result)
-    return response
-
-@app.get("/getSottocategorie")
-@cross_origin()
-def getSottocategorie():
-    sottocategorie = Inventory.query.with_entities(Inventory.sottocategoria).distinct().all()
-    result = [i[0] for i in sottocategorie]
-    result.sort()
-    response = jsonify(result)
-    return response
-
 @app.post('/add')
 @cross_origin()
 def add():

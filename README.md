@@ -78,10 +78,6 @@ Il server (hostato sulla porta 5000) implementa diverse pagine con metodi divers
 
 /control (POST): argomenti: id e conferma (True or False), se conferma è True conferma l'ordine e rimuove l'item dall'inventario, se è False annulla l'ordine, mantenendolo però nel log degli ordini.
 
-/categoria (GET): restituisce tutte le categorie
-
-/sottocategoria (GET): restituisce tutte le sottocategorie
-
 /headers (GET): restituisce tutti i parametri della table Inventario
 
 Quando un item viene venduto o rimosso tramite API, prima abbassa di uno la quantità, se vede che arriva a 0 lo rimuove dal database.
