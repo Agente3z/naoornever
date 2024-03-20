@@ -33,23 +33,25 @@ def get():
 @app.get("/headers")
 @cross_origin()
 def headers():
-    categorie = Inventory.query.with_entities(Inventory.categoria).distinct().all()
-    categorie = [i[0] for i in categorie]
-    categorie.sort()
-    sottocategorie = Inventory.query.with_entities(Inventory.sottocategoria).distinct().all()
-    sottocategorie = [i[0] for i in sottocategorie]
-    sottocategorie.sort()
-    headers = [{"name": "categoria", "type": "select", "selectOptions": categorie},
-                {"name": "sottocategoria", "type": "select", "selectOptions": sottocategorie},
-                {"name": "nome", "type": "text"},
-                {"name": "quantità", "type": "number"},
-                {"name": "materiali", "type": "text"},
-                {"name": "peso", "type": "number"},
-                {"name": "prezzo", "type": "number"},
-                {"name": "dimensioni", "type": "text"},
-                {"name": "foto", "type": "text"},
-                {"name": "link", "type": "text"}
-               ]
+    categories_subcategories = Inventory.query.with_entities(Inventory.categoria, Inventory.sottocategoria).distinct().all()
+    categories_subcategories.sort(key=lambda x: (x[0], x[1]))
+
+    headers = [{"name": "categoria", "type": "select", "selectOptions": list(set([i[0] for i in categories_subcategories]))},
+               {"name": "sottocategoria", "type": "select", "selectOptions": {i[0]: [] for i in categories_subcategories}}]
+
+    for cat, subcat in categories_subcategories:
+        headers[1]["selectOptions"][cat].append(subcat)
+
+    headers.extend([{"name": "nome", "type": "text"},
+                    {"name": "quantità", "type": "number"},
+                    {"name": "materiali", "type": "text"},
+                    {"name": "peso", "type": "number"},
+                    {"name": "prezzo", "type": "number"},
+                    {"name": "dimensioni", "type": "text"},
+                    {"name": "foto", "type": "text"},
+                    {"name": "link", "type": "text"}
+                   ])
+
     response = jsonify(headers)
     return response
 
