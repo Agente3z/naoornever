@@ -171,6 +171,11 @@ iframe {
 .wrapper.contatti-sponsor svg {
 	width: 4rem;
 	height: 4rem;
+	margin-inline: 2rem;
+}
+
+.wrapper.contatti-sponsor a {
+	text-decoration: none;
 }
 
 .wrapper.contatti-sponsor .description.socials {
@@ -183,9 +188,8 @@ iframe {
 .wrapper-contatti-sponsor .description.socials svg-container {
 	width: 100%;
 	display: flex;
-	flex-direction: row;
-	justify-content: space space-around;
-	gap: 1rem;
+	justify-content: space-around;
+	gap: 5rem;
 }
 
 @media screen and (max-width: 1510px) {
