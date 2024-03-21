@@ -2,18 +2,27 @@
 import { ref } from 'vue';
 
 const headers = ref([]);
+const currentCategory = ref('');
+const headersLoaded = ref(false);
 
 fetch('http://127.0.0.1:5000/headers')
 .then(res => res.json())
-.then(json => headers.value = json);
+.then(json => {
+	headers.value = json;
+	headersLoaded.value = true;
+});
 
 function submitForm(e) {
+	const formData = new FormData(e.target);
+	const data = [];
+	formData.forEach((value, key) => data.push(`${key}=${value}`));
+	const bodyString = data.join('&');
 	fetch('http://127.0.0.1:5000/add', {
 		method: 'POST',
 		headers: {
     		'Content-Type': 'application/x-www-form-urlencoded'
   		},
-		body: new FormData(e.target)
+		body: bodyString
 	}).then(res => res.json())
 	.then(json => alert(json));
 }
@@ -22,20 +31,22 @@ function submitForm(e) {
 <template>
 	<form @submit.prevent="submitForm">
 		<h1 class="page-title"></h1>
-			<div class="input-wrapper">
-				<label v-for="header in headers">
+		<div v-if="headersLoaded" class="input-wrapper">
+			<label>
+				Categoria
+				<select name="categoria" v-model="currentCategory">
+					<option default v-for="option in headers.find(header => header.name == 'categoria').selectOptions" :value="option">{{ option }}</option>
+				</select>
+			</label>
+			<label>
+				Sottocategoria
+				<select name="sottocategoria">
+					<option v-for="option in headers.find(header => header.name == 'sottocategoria').selectOptions[currentCategory]" :value="option">{{ option }}</option>
+				</select>
+			</label>
+			<label v-for="header in headers.filter(header => !['categoria', 'sottocategoria'].includes(header.name))">
 				{{ header.name }}
-					
-<!-- 
-				<select v-else name="categoria">
-							   <option v-for="option in header.selectOptions" :value="option">{{ option }}</option>
-						   </select>
-						   <select v-else name="sottocategoria">
-							   <option v-for="option in header.selectOptions" :value="option">{{ option }}</option>
-						   </select>
-			-->			
-	
-				<input v-if="header.type != 'select'" :type="header.type" :name="header.name">
+				<input v-if="header.type != 'select'" :type="header.type" :name="header.name" min="0">
 			</label>
 		</div>
 		<button type="submit"></button>

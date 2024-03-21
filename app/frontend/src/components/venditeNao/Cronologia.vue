@@ -12,6 +12,7 @@ fetch('http://127.0.0.1:5000/control?all=True')
 <template>
     <div class="sells-wrapper">
         <VenditaCard v-for="product in products" :product="product"/>
+        <span v-if="!products.length">Nessuna vendita conclusa.</span>
     </div>
 </template>
 

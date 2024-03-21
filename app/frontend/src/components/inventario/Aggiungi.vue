@@ -15,9 +15,9 @@ function submitForm(e) {
 	selectedProducts.value.forEach(product => {
 		fetch('http://127.0.0.1:5000/addExisting', {
 			method: 'POST',
-		headers: {
-    		'Content-Type': 'application/x-www-form-urlencoded'
-  		},
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
 			body: `nome=${product.nome}&quantità=${e.target.quantità.value}`
 		}).then(res => res.json())
 		.then(json => alert(json));
@@ -90,7 +90,7 @@ form {
 			}
 
 			&.quantity-selector::before {
-				content: 'Inserisci la quantità';
+				content: 'Quantità';
 			}
 
 			input {
