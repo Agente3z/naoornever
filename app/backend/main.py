@@ -68,7 +68,6 @@ def add():
     sottocategoria = request.form.get('sottocategoria')
     nome = request.form.get('nome')
     quantita = request.form.get('quantità')
-    print(quantita)
     if int(quantita)<=0:
         response = jsonify("La quantità deve essere maggiore di 0")
         return response
