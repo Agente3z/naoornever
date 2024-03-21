@@ -1,27 +1,122 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAO or Never - Homepage</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Nao or Never</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
 </head>
 <body>
-    <a href="https://www.naoornever.it">
-        <img src="./assets/logo.png" alt="logo">
-    </a>
-    <input id="accessibility-checkbox" type="checkbox">
-    <label for="accessibility-checkbox">
-        <svg class="accessibility-on" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-            <path fill="#ffff" d="M480-720q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720ZM360-80v-520q-60-5-122-15t-118-25l20-80q78 21 166 30.5t174 9.5q86 0 174-9.5T820-720l20 80q-56 15-118 25t-122 15v520h-80v-240h-80v240h-80Z"/>
-        </svg>
-        <svg class="accessibility-off" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-            <path fill="#ffff" d="M480-720q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720ZM360-80v-520H120v-80h720v80H600v520h-80v-240h-80v240h-80Z"/>
-        </svg>
-    </label>
-    <div class="subtitles">
-        <span data-text=""></span>
-    </div>
+	<div class="anchor" id="video"></div>
+	<div class="anchor" id="progetto"></div>
+	<div class="anchor" id="inclusivita"></div>
+	<div class="anchor" id="nao-manager"></div>
+	<div class="anchor" id="intelligenza-artificiale"></div>
+	<div class="anchor" id="team"></div>
+	<div class="anchor" id="contatti-sponsor"></div>
+	<div class="navbar">
+		<div class="logo">
+			<img src="assets/scritta3.png" alt="Nao or Never">
+		</div>
+		<div class="menu">
+			<ul>
+				<li><a href="#video">Video</a></li>
+				<li><a href="#progetto">Il Progetto</a></li>
+				<li><a href="#inclusivita">Inclusività</a></li>
+				<li><a href="#nao-manager">NAO Manager</a></li>
+				<li><a href="#intelligenza-artificiale">Intelligenza Artificiale</a></li>
+				<li><a href="#team">Team</a></li>
+				<li><a href="#contatti-sponsor">Contatti e Sponsor</a></li>
+			</ul>
+		</div>
+	</div>
+	<img src="assets/banner.png" alt="Banner" class="banner">
+	<div class="wrapper video">
+		<div class="description">
+			<h1>Il Video</h1>
+		</div>
+		<iframe
+		src="https://www.youtube.com/embed/tgbNymZ7vqY"
+		allowfullscreen
+		controls="1">
+		</iframe>
+	</div>
+	<div class="wrapper odd progetto">
+		<img src="assets/logo.png" alt="logo">
+		<div class="description">
+			<h1>Il Progetto</h1>
+			<p>Il progetto che abbiamo sviluppato noi di NAO Or Never è fortemente incentrato sulla rivoluzione tecnologica che abbiamo vissuto nell'ultimo anno, con l'avvento delle intelligenze artificiali. Queste formidabili innovazioni promettono di portare liete novità in vari ambiti, primo tra tutti quello commerciale. Il nostro team ha deciso di implementare l'intelligenza artificiale come strumento accessibile a tutti per la vendita al dettaglio.</p>
+			<p>Il nostro slogan rappresentativo della nostra visione avanguardistica è:</p>
+			<h2>THE FUTURE IS NAO</h2>
+		</div>
+	</div>
+	<div class="wrapper even inclusivita">
+		<div class="description">
+			<h1>Inclusività</h1>
+			<p>Abbiamo raggiunto questo fondamentale traguardo grazie alla possibilità di avere accesso ai sottotitoli del dialogo intercorso col venditore umanoide. Questa rivoluzionaria funzione che mettiamo a disposizione, spalanca le porte ai non udenti ora capaci di fare shopping in autonomia.</p>
+		</div>
+		<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-720q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720ZM360-80v-520H120v-80h720v80H600v520h-80v-240h-80v240h-80Z"/></svg>
+	</div>
+	<div class="wrapper odd nao-manager">
+		<div>
+			<img src="assets/NAOManager.png" alt="NAOManager">
+		</div>
+		<div class="description">
+			<h1>NAO Manager</h1>
+			<p>NAO gestisce sinergicamente vendita al dettaglio e gestione dell'inventario, scambiandosi dati con una app che comunica al lavoratore di SICIS una eventuale penuria di pezzi, ottimizzando le spedizioni e riducendo l'inquinamento!</p>
+		</div>
+	</div>
+	<div class="wrapper even intelligenza-artificiale">
+		<div class="description">
+			<h1>Intelligenza Artificiale</h1>
+			<p>La nostra intelligenza artificiale è stata sviluppata per essere accessibile a tutti, anche a chi non ha competenze informatiche. Abbiamo creato un'interfaccia semplice e intuitiva, che permette a chiunque di utilizzare NAO Manager senza problemi.</p>
+		</div>
+		<img src="assets/ai.png" alt="AI">
+	</div>
+	<div class="wrapper odd team">
+	</div>
+	<div class="wrapper even contatti-sponsor">
+	</div>
 </body>
 </html>
+<!-- 
+	Contenuti sito:
+
+	-Video YT con anteprima e link (piccolo, non invasivo)
+	-descrizione del progetto che ti sto per inviare
+
+	-cenni alla app
+	-cenni alla AI
+
+	-presentazione dei membri del team (ancora da fare)
+
+	-cenni all'azienda
+	-cenni ai social
+
+
+#Il progetto
+
+Il progetto che abbiamo sviluppato noi di NAO Or Never è fortemente incentrato sulla rivoluzione
+tecnologica che abbiamo vissuto nell'ultimo anno, con l'avvento delle intelligenze artificiali.
+Queste formidabili innovazioni promettono di portare liete novità in vari ambiti, primo tra tutti
+quello commerciale. Il nostro team ha deciso di implementare l'intelligenza artificiale come strumento 
+accessibile a tutti per la vendita al dettaglio.
+
+Il nostro slogan rappresentativo della nostra visione avanguardistica è: THE FUTURE IS NAO
+
+#Inclusivita 
+
+Abbiamo raggiunto questo fondamentale traguardo grazie alla possibilità di avere accesso ai
+sottotitoli del dialogo intercorso col venditore umanoide. Questa rivoluzionaria funzione che
+mettiamo a disposizione, spalanca le porte ai non udenti ora capaci di fare shopping in autonomia.
+
+salvaguardia ambientale
+
+Infatti ora NAO gestisce sinergicamente vendita al dettaglio e gestione dell'inventario, scambiandosi
+dati con una app che comunica al lavoratore di SICIS una eventuale penuria di pezzi, ottimizzando le spedizioni e riducendo l'inquinamento!
+ -->
