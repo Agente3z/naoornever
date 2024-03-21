@@ -157,6 +157,10 @@ svg {
 }
 
 @media screen and (max-width: 1510px) {
+	.navbar {
+		justify-content: center;
+	}
+
 	.wrapper {
 		display: flex;
 		height: fit-content;
