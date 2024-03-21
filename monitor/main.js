@@ -91,7 +91,7 @@ function drawSubtitles(subtitle) {
 	subtitle_container.dataset.text = getNextSubtitle();
 }
 
-const socket = new WebSocket('ws://localhost:8766');
+const socket = new WebSocket('ws://192.168.71.173:8766');
 
 socket.onopen = (e) => {
 	console.log('[open] Connection established');
