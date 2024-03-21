@@ -68,8 +68,12 @@ def add():
     sottocategoria = request.form.get('sottocategoria')
     nome = request.form.get('nome')
     quantita = request.form.get('quantità')
-    if int(quantita)<=0:
-        response = jsonify("La quantità deve essere maggiore di 0")
+    try:
+        if int(quantita)<=0:
+            response = jsonify("La quantità deve essere maggiore di 0")
+            return response
+    except:
+        response = jsonify("La quantità non è un numero")
         return response
     materiali = request.form.get('materiali')
     peso = request.form.get('peso')
@@ -91,7 +95,11 @@ def addExisting():
     print(nome, quantita)
     if nome and quantita:
         item = Inventory.query.filter_by(nome=nome).first_or_404()
-        item.quantita += int(quantita)
+        try:
+            item.quantita += int(quantita)
+        except:
+            response = jsonify("La quantità non è un numero")
+            return response
         db.session.commit()
         response = jsonify("Item added")
         return response
@@ -162,15 +170,16 @@ def control_post():
     if id and conferma:
         conferma = True if conferma == "True" else False
         order = Order.query.filter_by(id=id).first_or_404()
-        order.conferma = conferma
         item = Inventory.query.filter_by(nome=order.nome).first_or_404() # già venduto
         if conferma:
             if item.quantita == 0:
                 response = jsonify("Item already sold out")
             else:
+                order.conferma = conferma
                 item.quantita -= 1
                 response = jsonify("Done")
         else:
+            order.conferma = conferma
             response = jsonify("Item not sold")
         db.session.commit()
         return response

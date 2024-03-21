@@ -2,6 +2,20 @@
 # [NAOorNever](http://naoornever.it/)
 
 ## CONTENT
++ [Nao Challenge 2024](https://github.com/AssortedMine70/naoornever/tree/main#nao-challenge-2024)
+  + [Progetto](https://github.com/AssortedMine70/naoornever/tree/main#progetto)
++ [Report Codice](https://github.com/AssortedMine70/naoornever/tree/main#report-codice)
+  + [Database](https://github.com/AssortedMine70/naoornever/tree/main#database)
+  + [AI](https://github.com/AssortedMine70/naoornever/tree/main#ai)
+    + [Librerie Python](https://github.com/AssortedMine70/naoornever/tree/main#librerie-python)
+    + [Modello AI](https://github.com/AssortedMine70/naoornever/tree/main#nodello-ai)
+  + [Monitor](https://github.com/AssortedMine70/naoornever/tree/main#monitor)
+  + [App (NAO Manager)](https://github.com/AssortedMine70/naoornever/tree/main#app-nao-manager)
+    + [Backend](https://github.com/AssortedMine70/naoornever/tree/main#backend)
+    + [Frontend](https://github.com/AssortedMine70/naoornever/tree/main#frontend)
+  + [Sito Web](https://github.com/AssortedMine70/naoornever/tree/main#sito-web)
+  + [Comunicazione Client/Server](https://github.com/AssortedMine70/naoornever/tree/main#comunicazione-clientserver)
+
 
 ## NAO Challenge 2024
 Nelle precedenti edizioni, le missioni proposte ai team coinvolti riguardavano l'utilizzando del robot NAO per attività di solidarietà sociale, quest'anno il tema scelto è il **retail**, un settore che abbraccia la vendita di beni e servizi al pubblico. :gem:
@@ -56,7 +70,7 @@ La connessione al NAO è effettuata dalla libreria [IOinterface.py]([https://git
 
 Il monitor consiste in una pagina web che si connette al server con un websocket, il server invia i prodotti che il monitor deve mostrare e ciò che il NAO sta dicendo al cliente in modo da fornire contemporaneamente informazioni sui prodotti e sottotitoli per garantire accessibilità anche per chi ha problemi di udito.
 
-### App
+### App (NAO Manager)
 
 #### Backend
 Per la gestione del database degli ordini e dell'inventario viene utilizzato Flask che implementa una Rest API, e SQLAlchemy, che permette di interagire con un database SQL indipendentemente dall'engine, che in questo caso è SQLite.
@@ -64,27 +78,37 @@ Vengono create due tabelle che permettono di popolare il database SQL: Ordini e 
 Al primo avvio c'è anche la possibilità di importare un database in formato csv dentro all'SQL.
 Il server (hostato sulla porta 5000) implementa diverse pagine con metodi diversi:
 
-/get (GET): senza argomenti da tutti gli elementi, con arg ?nome=nome da solo un elemento
+```/get``` (GET): senza argomenti da tutti gli elementi, con arg ?nome=nome da solo un elemento
 
-/add (POST): dati in post tutti gli argomenti aggiunge un elemento all'inventario (data: "arg1=test&arg2=test...")
+```/add``` (POST): dati in post tutti gli argomenti aggiunge un elemento all'inventario (data: "arg1=test&arg2=test...")
 
-/addExisting (POST): argomenti: nome, quantità, aumenta di N la quantità di un item nell'inventario 
+```/addExisting``` (POST): argomenti: nome, quantità, aumenta di N la quantità di un item nell'inventario 
 
-/remove (GET): dato un nome come argomento lo rimuove dall'inventario
+```/remove``` (GET): dato un nome come argomento lo rimuove dall'inventario
 
-/sell (PATCH): dato un nome come argomento lo aggiunge agli ordini in attesa
+```/sell``` (PATCH): dato un nome come argomento lo aggiunge agli ordini in attesa
 
-/control (GET): argomenti: all (True o False), elenca tutti gli ordini in attesa di conferma, se all è True restituisce anche quelli già confermati o rifiutati
+```/control``` (GET): argomenti: all (True o False), elenca tutti gli ordini in attesa di conferma, se all è True restituisce anche quelli già confermati o rifiutati
 
-/control (POST): argomenti: id e conferma (True or False), se conferma è True conferma l'ordine e rimuove l'item dall'inventario, se è False annulla l'ordine, mantenendolo però nel log degli ordini.
+```/control``` (POST): argomenti: id e conferma (True or False), se conferma è True conferma l'ordine e rimuove l'item dall'inventario, se è False annulla l'ordine, mantenendolo però nel log degli ordini.
 
-/headers (GET): restituisce tutti i parametri della table Inventario
+```/headers``` (GET): restituisce tutti i parametri della table Inventario
 
 Quando un item viene venduto o rimosso tramite API, prima abbassa di uno la quantità, se vede che arriva a 0 riferisce e non esegue il comando.
 Nel caso il sito mostri un errore 404, vuol dire che l'id dell'ordine o il nome del prodotto non sono stati trovati.
 
 #### Frontend
 
+L’inventario dell’azienda collegato al NAO e gli ordini da lui effettuati sono visualizzati in una single-page Web App realizzata con Vue.js, che interagisce con il Backend descritto nel punto precedente.
+Grazie a questa interfaccia è quindi possibile quindi gestire l’inventario dei prodotti vendibili dal NAO, oltre che visualizzare gli ordini da lui conclusi.
+Da quest’ultima interfaccia, Vendite NAO, si sarà infatti inoltre avvisati quando rimangono pochi oggetti in magazzino del prodotto appena venduto, permettendo quindi una più sostenibile gestione delle risorse.
+Nell’interfaccia di Inventario è invece possibile aggiungere nuovi tipi di prodotti oltre che ad aggiornare la disponibilità in magazzino di quest’ultimo, oltre ad una visione tabellare dell’intero magazzino.
+
+### Sito web
+
+Il sito web presente all’indirizzo [www.naoornever.it](https://naoornever.it/) funge da presentazione per la squadra, riprendendo vari elementi di design della Brand Identity del team e il suo tipico colore azzurro insieme a descrivere il progetto. È realizzato con HTML, CSS e Javascript.
+Nel sito è presente un link al video realizzato dal team, caricato su Youtube. Presente è inoltre la descrizione del progetto svolto, insieme a cenni dei componenti che formano l’elaborato svolto: cenni al NAO Monitor, cenni all’Intelligenza Artificiale utilizzata per aiutare nelle sue scelte l’acquirente, come collegamenti ai social del Team o lo Sponsor principale del progetto.
+ 
 ### Comunicazione client/server
 
 La comunicazione avviene in modo sincrono tramite client e server.
